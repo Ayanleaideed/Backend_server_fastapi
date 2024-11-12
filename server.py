@@ -79,6 +79,15 @@ def download_data(token: str = Depends(verify_token)):
     return Response(content="File not found.", status_code=404)
 
 
+# Delete endpoint to clear data storage
+@app.delete("/delete-data/")
+async def delete_data():
+    if not data_storage:
+        raise HTTPException(status_code=404, detail="No data to delete")
+    data_storage.clear()
+    return {"status": "All data deleted successfully"}
+
+
 # Run the FastAPI server
 if __name__ == "__main__":
     import uvicorn
