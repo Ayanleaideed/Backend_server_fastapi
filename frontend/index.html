@@ -76,7 +76,6 @@
                     <span>Delete All Data</span>
                 </button>
             
-                
                 <a 
                   
                     href="https://backend-server-fastapi.vercel.app/download-data"
@@ -208,22 +207,56 @@
             }
         }
         async function deleteData() {
+            const loadButton = document.getElementById('loadButton');
+            const originalContent = loadButton.innerHTML;
+            
             try {
-                const response = await fetch('https://backend-server-fastapi.vercel.app/delete-data/', {
-                    method: 'DELETE'
+                // Show loading state
+                loadButton.innerHTML = '<i class="fas fa-circle-notch loading mr-2"></i>Deleting...';
+                loadButton.disabled = true;
+
+                const response = await fetch('http://127.0.0.1:8000/delete-data/', {
+                    method: 'delete',
+                    headers: {
+                        'Authorization': 'Bearer TestTokenDemo_123',
+                        'Content-Type': 'application/json'
+                    }
                 });
-                if (!response.ok) throw new Error('Failed to delete data');
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        showStatus('No data to delete', 'info');
+                        return;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
 
                 const result = await response.json();
-                alert(result.status);
                 
-                // Clear the displayed list after deletion
-                document.getElementById('fileList').innerHTML = '';
-            } catch (error) {
-                console.error('Error:', error);
-                alert("Failed to delete data. Please try again.");
-            }
-        }
+                // Clear the displayed list after successful deletion
+                document.getElementById('fileList').innerHTML = `
+                    <div class="text-center text-gray-600 py-4">
+                        <i class="fas fa-check-circle text-3xl mb-2"></i>
+                        <p>All data has been deleted successfully</p>
+                    </div>`;
+                
+                showStatus('Data deleted successfully', 'success');
+                
+                } catch (error) {
+                    console.error('Error:', error);
+                    showStatus('Failed to delete data. Please try again.', 'error');
+                    
+                    document.getElementById('fileList').innerHTML = `
+                        <div class="text-center text-red-600 py-4">
+                            <i class="fas fa-exclamation-circle text-3xl mb-2"></i>
+                            <p>Failed to delete data. Please try again later.</p>
+                        </div>`;
+                } finally {
+                    // Reset button state
+                    loadButton.innerHTML = originalContent;
+                    loadButton.disabled = false;
+                }
+    }
     </script>
 </body>
 </html>
