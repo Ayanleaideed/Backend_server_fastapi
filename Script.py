@@ -3,8 +3,8 @@ import requests
 import getpass
 
 # Define the endpoint
-endpoint = "http://127.0.0.1:8000/receive-data/"
-# endpoint = "https://backend-server-fastapi.vercel.app/receive-data"
+#endpoint = "http://127.0.0.1:8000/receive-data/"
+endpoint = "https://backend-server-fastapi.vercel.app/receive-data"
 
 # Define the token
 token = "TestTokenDemo_123"  # Replace with your actual token
