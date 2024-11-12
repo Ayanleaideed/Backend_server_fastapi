@@ -59,7 +59,7 @@ backend_server_fastapi/
 ### 1. Clone the Repository
 
 ```bash
-git clone [<repository-url>](https://github.com/Ayanleaideed/Backend_server_fastapi.git)
+git clone https://github.com/Ayanleaideed/Backend_server_fastapi.git
 cd backend_server_fastapi
 ```
 
